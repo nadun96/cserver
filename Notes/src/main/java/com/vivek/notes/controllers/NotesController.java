@@ -2,6 +2,7 @@ package com.vivek.notes.controllers;
 
 import java.util.List;
 
+import ch.qos.logback.core.net.SyslogOutputStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,6 +47,7 @@ public class NotesController {
         this.notesService.deleteNote(notesId);
         return new ResponseEntity<ApiRes>(new ApiRes("Note deleted",true),HttpStatus.OK);
     }
+
     //get by user
     @GetMapping("/{userId}")
     public ResponseEntity<List<NotesDto>> getNotesByUser(@PathVariable String userId){
@@ -53,17 +55,10 @@ public class NotesController {
         return new ResponseEntity<List<NotesDto>>(Note,HttpStatus.OK);
     }
 
-    //get
-    // @GetMapping("/{notesId}")
-    // public ResponseEntity<NotesDto> getNotes(@PathVariable Integer notesId){
-    //     NotesDto Note=this.notesService.getNote(notesId);
-    //     return new ResponseEntity<NotesDto>(Note,HttpStatus.OK);
-    // }
-
     //getAll
     @GetMapping("/")
-   @CrossOrigin
     public ResponseEntity<List<NotesDto>> getNotes(){
+        System.out.println("/ is working");
         List<NotesDto> Note=this.notesService.getAllNote();
         return new ResponseEntity<List<NotesDto>>(Note,HttpStatus.OK);
     }
